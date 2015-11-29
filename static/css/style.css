@@ -1,0 +1,23 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#search-panel {
+  position: fixed;
+
+  height: 100%;
+  width: 18%;
+
+  padding: 10px;
+
+  border-right: solid 1px black;
+}
+
+#citizen-panel {
+  left: 20%;
+  display: inline-block;
+  position: relative;
+  margin: 10px;
+}

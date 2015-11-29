@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html ng-app="honeyHeadquartersApp">
+  <head>
+    <title>Honey Headquarters</title>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
+    <script src="../static/js/index.js"></script>
+  </head>
+
+  <body ng-controller="CitizensCtrl">
+    <div id="search-panel">
+      <label for="sort-by">Sort by </label>
+      <select name="sort-by" ng-model="sort_key" ng-change="new_query()">
+        <option value="id">ID</option>
+        <option value="name">Name</option>
+        <option value="year_acquired">Year</option>
+      </select>
+
+      <br>
+      <br>
+
+      <label for="character-filter">Character: </label>
+      <select name="character-filter" ng-model="character_key" ng-change="new_query()">
+        <option ng-repeat="c in characters" value="{[c]}">{[ c ]}</option>
+      </select>
+    </div>
+    <div id="citizen-panel">
+      <div ng-repeat="c in citizens">
+        <span>{[ c.name ]}</span>
+      </div>
+    </div>
+  </body>
+</html>

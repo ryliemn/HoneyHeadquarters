@@ -1,9 +1,14 @@
 import json
 
 from flask import request
+from flask import render_template
 
 from app import app
 from HoneyHeadquarters import honeyheadquarters as HH
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 @app.route("/citizen")
 def get_citizens():
