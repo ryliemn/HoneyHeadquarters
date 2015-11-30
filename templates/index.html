@@ -11,6 +11,8 @@
 
   <body ng-controller="CitizensCtrl">
     <div id="search-panel">
+      <h1>Honey Headquarters</h1>
+
       <label for="sort-by">Sort by </label>
       <select name="sort-by" ng-model="sort_key" ng-change="new_query()">
         <option value="id">ID</option>
@@ -40,10 +42,23 @@
         <option ng-repeat="h in hometowns" value="{[h]}"> {[ h ]}</option>
       </select>
     </div>
-    <div id="citizen-panel">
-      <div ng-repeat="c in citizens">
-        <span>{[ c.name ]}</span>
+    <div id="citizen-panel" ng-class="{loading: is_loading}">
+      <div ng-repeat="c in citizens" class="citizen">
+        <img width=100 ng-src="{[ c.image_url ]}" ng-click="show_large_picture(c.image_url)">
+        <div class="citizen-details">
+          <div><strong>{[ c.name ]}</strong></div>
+          <div>{[ c.character ]}</div>
+          <div>Born in {[ c.hometown ]} in {[ c.year_acquired ]}</div>
+          <div>{[ c.size ]}</div>
+          <br>
+          <div>{[ c. description ]}</div>
+        </div>
       </div>
+    </div>
+
+    <div id="large-picture" ng-show="showing_large_picture">
+      <div id="close_large_picture" ng-click="showing_large_picture=false"><strong>X</strong></div>
+      <img ng-src="{[ large_picture_url ]}" height=600>
     </div>
   </body>
 </html>

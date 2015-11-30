@@ -1,23 +1,107 @@
+@font-face {
+  font-family: PoohFont;
+  src: url(../fonts/pooh.ttf);
+}
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+
+  font-family: Georgia;
+  background-color: #FF8;
 }
+
+h1 {
+  text-align: center;
+  padding: 0;
+  margin-bottom: 50px;
+
+  font-family: PoohFont;
+}
+
+label {
+  width: 100px;
+  display: inline-block;
+}
+
+select {
+  width: 60%;
+  float: right;
+}
+
+.loading {
+  background-color: gray;
+}
+
+.citizen {
+  display: inline-block;
+  width: 100%;
+
+  margin: 10px 0;
+}
+
+.citizen:hover {
+  background-color: #FA5;
+}
+
+.citizen img {
+  float: left;
+}
+
+.citizen img:hover {
+  cursor: pointer;
+}
+
+.citizen-details {
+  position: relative;
+  left: 50px;
+}
+
 
 #search-panel {
   position: fixed;
 
   height: 100%;
-  width: 18%;
+  width: 19%;
 
   padding: 10px;
 
   border-right: solid 1px black;
+
+  background-color: #900;
 }
 
 #citizen-panel {
+  height: 100%;
+  width: 75%;
+
   left: 20%;
   display: inline-block;
   position: relative;
-  margin: 10px;
+  padding: 10px 20px;
+}
+
+#large-picture {
+  height: auto;
+  width: auto;
+  z-index: 5;
+
+  position: fixed;
+  top: 10%;
+  left: 30%;
+
+  border: solid 1px black;
+  background-color: white;
+
+  text-align: right;
+}
+
+#close_large_picture {
+  color: blue;
+  text-decoration: underline;
+}
+
+#close_large_picture:hover {
+  cursor: pointer;
 }

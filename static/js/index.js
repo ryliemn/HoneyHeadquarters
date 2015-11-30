@@ -9,6 +9,11 @@ honeyHeadquartersApp.controller('CitizensCtrl', function ($scope, $http) {
   $scope.sort_key = "";
   $scope.character_key = "";
   $scope.size_key = "";
+  $scope.hometown_key = "";
+  $scope.showing_large_picture = false;
+  $scope.large_picture_url = "";
+
+  $scope.is_loading = true;
 
   $scope.populate_character_select = function() {
     $http({
@@ -76,6 +81,7 @@ honeyHeadquartersApp.controller('CitizensCtrl', function ($scope, $http) {
   }
 
   $scope.new_query = function() {
+    $scope.is_loading = true;
     var new_url = $scope.new_query_url();
 
     $http({
@@ -83,9 +89,17 @@ honeyHeadquartersApp.controller('CitizensCtrl', function ($scope, $http) {
       url: new_url
     }).then(function successCallback(response) {
       $scope.citizens = response.data;
+      $scope.is_loading = false;
     }, function errorCallback(response) {
       console.log("could not retrieve citizens");
     });
+  }
+
+  $scope.show_large_picture = function(image_url) {
+    $scope.large_picture_url = image_url;
+    $scope.showing_large_picture = true;
+    console.log(image_url);
+    console.log($scope.showing_large_picture);
   }
 
   $scope.new_query();
