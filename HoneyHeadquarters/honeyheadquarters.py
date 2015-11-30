@@ -5,6 +5,8 @@ from .Citizen import Citizen
 
 CITIZENS_URL = "https://sheetsu.com/apis/64b5c3f8"
 CHARACTERS_URL = CITIZENS_URL + "/column/character"
+SIZES_URL = CITIZENS_URL + "/column/size"
+HOMETOWNS_URL = CITIZENS_URL + "/column/hometown"
 
 def get_all_citizens():
     x = urllib.request.urlopen(CITIZENS_URL).read().decode('utf-8')
@@ -36,17 +38,37 @@ def get_citizens_sorted_by(sort_key):
     return sorted_citizens
 
 def filter_citizens_by_character(character_key, citizens):
-    return [c for c in citizens if c.character.lower() == character_key.lower()]
+    if character_key.lower() == 'all':
+        return citizens
+    else:
+        return [c for c in citizens if c.character.lower() == character_key.lower()]
 
 def filter_citizens_by_size(size_key, citizens):
-    return [c for c in citizens if c.size.lower() == size_key.lower()]
+    if size_key.lower() == 'all':
+        return citizens
+    else:
+        return [c for c in citizens if c.size.lower() == size_key.lower()]
 
 def filter_citizens_by_hometown(hometown_key, citizens):
-    return [c for c in citizens if c.hometown.lower() == hometown_key.lower()]
-
+    if hometown_key.lower() == 'all':
+        return citizens
+    else:
+        return [c for c in citizens if c.hometown.lower() == hometown_key.lower()]
 
 def get_unique_characters():
     x = urllib.request.urlopen(CHARACTERS_URL).read().decode('utf-8')
+    x = json.loads(x)
+    x = set(x['result'])
+    return list(x)
+
+def get_unique_sizes():
+    x = urllib.request.urlopen(SIZES_URL).read().decode('utf-8')
+    x = json.loads(x)
+    x = set(x['result'])
+    return list(x)
+
+def get_unique_hometowns():
+    x = urllib.request.urlopen(HOMETOWNS_URL).read().decode('utf-8')
     x = json.loads(x)
     x = set(x['result'])
     return list(x)

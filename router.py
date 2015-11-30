@@ -38,3 +38,11 @@ def get_citizens():
 @app.route("/character")
 def get_characters():
     return json.dumps(HH.get_unique_characters())
+
+@app.route("/size")
+def get_sizes():
+    return json.dumps(HH.get_unique_sizes())
+
+@app.route("/hometown")
+def get_hometowns():
+    return json.dumps(HH.get_unique_hometowns())

@@ -25,6 +25,20 @@
       <select name="character-filter" ng-model="character_key" ng-change="new_query()">
         <option ng-repeat="c in characters" value="{[c]}">{[ c ]}</option>
       </select>
+
+      <br>
+
+      <label for="size-filter">Size: </label>
+      <select name="size-filter" ng-model="size_key" ng-change="new_query()">
+        <option ng-repeat="s in sizes" value="{[s]}">{[ s ]}</option>
+      </select>
+
+      <br>
+
+      <label for="hometown-filter">Hometown: </label>
+      <select name="hometown-filter" ng-model="hometown_key" ng-change="new_query()">
+        <option ng-repeat="h in hometowns" value="{[h]}"> {[ h ]}</option>
+      </select>
     </div>
     <div id="citizen-panel">
       <div ng-repeat="c in citizens">
