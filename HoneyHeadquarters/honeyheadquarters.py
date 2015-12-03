@@ -73,6 +73,7 @@ def get_unique_hometowns():
     x = set(x['result'])
     return list(x)
 
+
 def encode_citizen(obj):
     if isinstance(obj, Citizen):
         return obj.__dict__

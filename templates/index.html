@@ -41,9 +41,30 @@
       <select name="hometown-filter" ng-model="hometown_key" ng-change="new_query()">
         <option ng-repeat="h in hometowns" value="{[h]}"> {[ h ]}</option>
       </select>
+
+      <br>
+      <br>
+
+      <hr>
+      <div id="pages">
+        <span class="page_no"
+            ng-repeat="(display, back) in pages" ng-class="{active_page_no: current_page == back}"
+            ng-click="set_page(back)">{[display]}</span>
+      </div>
+
+      <br>
+      <br>
+
+      <div>Population: {[population]}</div>
+
+      <br>
+
+      <div ng-repeat="(key, value) in citizen_counts">
+        {[value]} {[key]}s
+      </div>
     </div>
     <div id="citizen-panel" ng-class="{loading: is_loading}">
-      <div ng-repeat="c in citizens" class="citizen">
+      <div ng-repeat="c in citizens | startFrom:start_from()| limitTo:page_limit" class="citizen">
         <img width=100 ng-src="{[ c.image_url ]}" ng-click="show_large_picture(c.image_url)">
         <div class="citizen-details">
           <div><strong>{[ c.name ]}</strong></div>

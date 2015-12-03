@@ -105,3 +105,22 @@ select {
 #close_large_picture:hover {
   cursor: pointer;
 }
+
+#pages {
+  text-align: center;
+}
+
+.page_no {
+  text-decoration: underline;
+  color: lightblue;
+  margin: 0 3px;
+}
+
+.page_no:hover {
+  cursor: pointer;
+}
+
+.active_page_no {
+  font-weight: bolder;
+  color: darkblue;
+}

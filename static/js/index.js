@@ -5,7 +5,20 @@ honeyHeadquartersApp.config(['$interpolateProvider', function($interpolateProvid
   $interpolateProvider.endSymbol(']}');
 }]);
 
+honeyHeadquartersApp.filter('startFrom', function() {
+  return function(input, start) {
+    console.log(input);
+    if(input) {
+      start = +start;
+      return input.slice(start);
+    }
+    return [];
+  }
+});
+
 honeyHeadquartersApp.controller('CitizensCtrl', function ($scope, $http) {
+  $scope.is_first_load = true;
+
   $scope.sort_key = "";
   $scope.character_key = "";
   $scope.size_key = "";
@@ -15,12 +28,20 @@ honeyHeadquartersApp.controller('CitizensCtrl', function ($scope, $http) {
 
   $scope.is_loading = true;
 
+  $scope.page_limit = 10;
+  $scope.current_page = 0;
+  $scope.total_pages = null;
+  $scope.start_from = function() {
+    return $scope.current_page * 10;
+  }
+
   $scope.populate_character_select = function() {
     $http({
       method: 'GET',
       url: '/character'
     }).then(function successCallback(response) {
       $scope.characters = response.data;
+      if ($scope.is_first_load) $scope.count_characters($scope.characters);
       $scope.characters.push('All');
     }, function errorCallback(response) {
       console.log("could not get characters");
@@ -90,6 +111,8 @@ honeyHeadquartersApp.controller('CitizensCtrl', function ($scope, $http) {
     }).then(function successCallback(response) {
       $scope.citizens = response.data;
       $scope.is_loading = false;
+      $scope.total_pages = Math.ceil($scope.citizens.length / 10);
+      $scope.create_pages($scope.total_pages);
     }, function errorCallback(response) {
       console.log("could not retrieve citizens");
     });
@@ -98,12 +121,45 @@ honeyHeadquartersApp.controller('CitizensCtrl', function ($scope, $http) {
   $scope.show_large_picture = function(image_url) {
     $scope.large_picture_url = image_url;
     $scope.showing_large_picture = true;
-    console.log(image_url);
-    console.log($scope.showing_large_picture);
   }
+
 
   $scope.new_query();
   $scope.populate_character_select();
   $scope.populate_size_select();
   $scope.populate_hometown_select();
+
+  $scope.count_characters = function(chars) {
+    $scope.population = $scope.citizens.length;
+
+    var counts = {};
+    for (var i = 0; i < chars.length; i++) {
+      counts[chars[i]] = 0;
+    }
+
+    for (var i = 0; i < $scope.citizens.length; i++) {
+      counts[$scope.citizens[i]['character']] += 1;
+    }
+
+    $scope.citizen_counts = counts;
+
+    $scope.is_first_load = false;
+  }
+
+  $scope.create_pages = function(page_count) {
+    pages = {};
+    for (var i = 0; i < page_count; i++) {
+      pages[i + 1] = i;
+    }
+
+    $scope.pages = pages;
+    $scope.current_page = 0;
+  }
+
+  $scope.set_page = function(new_page) {
+    $scope.current_page = new_page;
+    // console.log($scope.current_page);
+    // console.log($scope.start_from());
+    // console.log($scope.citizens);
+  }
 });
