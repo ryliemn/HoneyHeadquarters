@@ -14,7 +14,7 @@
       <h1>Honey Headquarters</h1>
 
       <label for="sort-by">Sort by </label>
-      <select name="sort-by" ng-model="sort_key" ng-change="new_query()">
+      <select name="sort-by" ng-model="sort_key" ng-change="create_pages()">
         <option value="id">ID</option>
         <option value="name">Name</option>
         <option value="year_acquired">Year</option>
@@ -24,21 +24,21 @@
       <br>
 
       <label for="character-filter">Character: </label>
-      <select name="character-filter" ng-model="character_key" ng-change="new_query()">
+      <select name="character-filter" ng-model="character_key" ng-change="current_page = 0">
         <option ng-repeat="c in characters" value="{[c]}">{[ c ]}</option>
       </select>
 
       <br>
 
       <label for="size-filter">Size: </label>
-      <select name="size-filter" ng-model="size_key" ng-change="new_query()">
+      <select name="size-filter" ng-model="size_key" ng-change="current_page = 0">
         <option ng-repeat="s in sizes" value="{[s]}">{[ s ]}</option>
       </select>
 
       <br>
 
       <label for="hometown-filter">Hometown: </label>
-      <select name="hometown-filter" ng-model="hometown_key" ng-change="new_query()">
+      <select name="hometown-filter" ng-model="hometown_key" ng-change="current_page = 0">
         <option ng-repeat="h in hometowns" value="{[h]}"> {[ h ]}</option>
       </select>
 
@@ -48,8 +48,8 @@
       <hr>
       <div id="pages">
         <span class="page_no"
-            ng-repeat="(display, back) in pages" ng-class="{active_page_no: current_page == back}"
-            ng-click="set_page(back)">{[display]}</span>
+            ng-repeat="(display, back) in get_pages()" ng-class="{active_page_no: current_page == back}"
+            ng-click="set_page(back)">{[display]} </span>
       </div>
 
       <br>
@@ -64,8 +64,14 @@
       </div>
     </div>
     <div id="citizen-panel" ng-class="{loading: is_loading}">
-      <div ng-repeat="c in citizens | startFrom:start_from()| limitTo:page_limit" class="citizen">
-        <img width=100 ng-src="{[ c.image_url ]}" ng-click="show_large_picture(c.image_url)">
+      <div ng-repeat="c in (filteredCitizens = (citizens |
+          filter: (character_key !== 'All' || '') && {character:character_key} |
+          filter: (size_key !== 'All' || '') && {size: size_key} |
+          filter: (hometown_key !== 'All' || '') && {hometown: hometown_key} |
+          orderBy: sort_key) |
+          startFrom: start_from() |
+          limitTo: page_limit)" class="citizen">
+        <img width=150 ng-src="{[ c.image_url ]}" ng-click="show_large_picture(c.image_url)">
         <div class="citizen-details">
           <div><strong>{[ c.name ]}</strong></div>
           <div>{[ c.character ]}</div>

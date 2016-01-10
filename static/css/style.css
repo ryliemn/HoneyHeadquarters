@@ -108,6 +108,8 @@ select {
 
 #pages {
   text-align: center;
+  width: 100%;
+  word-wrap: normal;
 }
 
 .page_no {
